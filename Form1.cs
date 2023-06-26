@@ -11,5 +11,10 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         {
 
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox2.Enabled = checkBox1.Checked;
+        }
     }
 }
