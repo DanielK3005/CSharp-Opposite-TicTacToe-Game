@@ -12,7 +12,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
-            Application.Run(new TicTacToeMisere());
+            Application.Run(new TicTacToeMisere(5,5, "player1", "player2"));
         }
     }
 }

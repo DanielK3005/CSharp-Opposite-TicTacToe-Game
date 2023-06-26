@@ -18,19 +18,20 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private Label player1ScoreLabel;
         private Label player2ScoreLabel;
 
-        public TicTacToeMisere()
+        public TicTacToeMisere(int i_rows, int i_columns, string i_player1Name, string i_player2Name)
         {
             InitializeComponent();
 
-            this.rows = 3;
-            this.columns = 3;
+            this.rows = i_rows;
+            this.columns = i_columns;
             buttons = new Button[rows, columns];
 
             int buttonSize = 100; // Adjust the button size as desired
             int spacing = 10; // Adjust the spacing between buttons as desired
+            int labelHeight = 30; // Adjust the height of the labels as desired
 
             int formWidth = columns * buttonSize + (columns - 1) * spacing;
-            int formHeight = rows * buttonSize + (rows - 1) * spacing;
+            int formHeight = rows * buttonSize + (rows - 1) * spacing + labelHeight;
             this.ClientSize = new System.Drawing.Size(formWidth, formHeight);
 
             for (int i = 0; i < rows; i++)
@@ -49,12 +50,12 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             // Create labels for player scores
             player1ScoreLabel = new Label();
-            player1ScoreLabel.Text = "Player 1: 0"; // Initial score for player 1
+            player1ScoreLabel.Text = i_player1Name + ": 0"; // Initial score for player 1
             player1ScoreLabel.Location = new System.Drawing.Point(0, rows * (buttonSize + spacing));
             this.Controls.Add(player1ScoreLabel);
 
             player2ScoreLabel = new Label();
-            player2ScoreLabel.Text = "Player 2: 0"; // Initial score for player 2
+            player2ScoreLabel.Text = i_player2Name + ": 0"; // Initial score for player 2
             player2ScoreLabel.Location = new System.Drawing.Point(columns * (buttonSize + spacing) - 100, rows * (buttonSize + spacing));
             this.Controls.Add(player2ScoreLabel);
         }
