@@ -26,12 +26,12 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         //    HumanVsComputer
         //}
 
-        public TicTacToeMisere(int i_rows, int i_columns, string i_player1Name, string i_player2Name, int i_gameMode)
+        public TicTacToeMisere(int i_size, string i_player1Name, string i_player2Name, GameLogic.eGameMode i_gameMode)
         {
-            InitializeComponent(i_rows, i_columns, i_player1Name, i_player2Name);
+            InitializeComponent(i_size, i_size, i_player1Name, i_player2Name);
 
             gameLogic = new GameLogic();
-            gameLogic.InitGameLogic(i_rows, (GameLogic.eGameMode)i_gameMode);
+            gameLogic.InitGameLogic(i_size, i_gameMode);
 
         }
 
@@ -105,6 +105,9 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                     // For example, display a message, reset the game, etc.
                 }
             }
+
+
+            //if we are in computer vs player mode, after the button has been clicked we will check if we have winning situation, else we will generate computer move and apply it to the board by accessing the right button in the button array by the coordinates
         }
 
         private void UpdateScoreLabels()

@@ -1,3 +1,5 @@
+using Ex02;
+
 namespace B23_Ex05_Daniel_208063362_Lior_207899469
 {
     internal static class Program
@@ -12,7 +14,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
-            Application.Run(new TicTacToeMisere(3,3, "player1", "player2", 0));
+            Application.Run(new TicTacToeMisere(3,"player1", "player2", GameLogic.eGameMode.HumanVsHuman));
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Ex02
 {
-    internal class GameBoard
+    public class GameBoard
     {
         private eSymbol[,] m_Board;
         private int m_BoardSize;

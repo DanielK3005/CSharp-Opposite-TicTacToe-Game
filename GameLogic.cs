@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex02
 {
-    internal class GameLogic
+    public class GameLogic
     {
         private const string k_Player1Name = "Player 1";
         private const string k_Player2Name = "Player 2";
