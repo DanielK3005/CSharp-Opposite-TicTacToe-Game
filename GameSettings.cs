@@ -23,6 +23,15 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private void startButton_Click(object sender, EventArgs e)
         {
             checkForErrors();
+
+            if(player2CB.Checked)
+            {
+                Application.Run(new TicTacToeMisere((int)rowsNumeric.Value, player1TB.Text, player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsHuman));
+            }
+            else
+            {
+                Application.Run(new TicTacToeMisere((int)rowsNumeric.Value, player1TB.Text, player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsComputer));
+            }
         }
 
         private void checkForErrors()
