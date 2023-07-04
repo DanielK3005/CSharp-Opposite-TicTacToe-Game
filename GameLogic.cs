@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex02
 {
-    internal class GameLogic
+    public class GameLogic
     {
         private const string k_Player1Name = "Player 1";
         private const string k_Player2Name = "Player 2";
@@ -185,6 +185,14 @@ namespace Ex02
             }
 
             return isColSequence;
+        }
+
+        public GameBoard.eSymbol getCurrentPlayerSymbol()
+        {
+            Player currentPlayer = m_Player1;
+            GetCurrentPlayerTurn(out currentPlayer);
+
+            return currentPlayer.GetPlayerSymbol();
         }
 
         private bool checkDiagonalSequence(Player i_Player)

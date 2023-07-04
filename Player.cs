@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex02
 {
-    internal class Player
+    public class Player
     {
         private string m_PlayerName;
         private GameBoard.eSymbol m_PlayerSymbol;
