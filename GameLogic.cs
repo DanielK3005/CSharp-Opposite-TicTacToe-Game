@@ -187,6 +187,14 @@ namespace Ex02
             return isColSequence;
         }
 
+        public GameBoard.eSymbol getCurrentPlayerSymbol()
+        {
+            Player currentPlayer = m_Player1;
+            GetCurrentPlayerTurn(out currentPlayer);
+
+            return currentPlayer.GetPlayerSymbol();
+        }
+
         private bool checkDiagonalSequence(Player i_Player)
         {
             bool isDiagonalSequence = true;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex02;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,11 +18,25 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private int columns;
         private Label player1ScoreLabel;
         private Label player2ScoreLabel;
+        private GameLogic gameLogic;
+
+        public enum eGameMode
+        {
+            HumanVsHuman,
+            HumanVsComputer
+        }
 
         public TicTacToeMisere(int i_rows, int i_columns, string i_player1Name, string i_player2Name)
         {
-            InitializeComponent();
+            InitializeComponent(i_rows, i_columns, i_player1Name, i_player2Name);
 
+            gameLogic = new GameLogic();
+            gameLogic.InitGameLogic(i_rows, (GameLogic.eGameMode)eGameMode.HumanVsHuman);
+
+        }
+
+        private void InitializeComponent(int i_rows, int i_columns, string i_player1Name, string i_player2Name)
+        {
             this.rows = i_rows;
             this.columns = i_columns;
             buttons = new Button[rows, columns];
@@ -42,7 +57,11 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                     button.Size = new System.Drawing.Size(buttonSize, buttonSize);
                     button.Location = new System.Drawing.Point(j * (buttonSize + spacing), i * (buttonSize + spacing));
                     button.Font = new System.Drawing.Font("Arial", 36);
+
+                    button.Tag = new GameBoard.Coordinate(i, j);
+
                     button.Click += Button_Click;
+                    
                     buttons[i, j] = button;
                     this.Controls.Add(button);
                 }
@@ -62,9 +81,22 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void Button_Click(object sender, EventArgs e)
         {
+    
             Button clickedButton = (Button)sender;
-            clickedButton.Text = "X"; // Set the text to X (you can modify this logic according to your game's rules)
+            clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
             clickedButton.Enabled = false; // Disable the button after it's clicked
+
+            // Retrieve the button coordinates from the Tag property
+            GameBoard.Coordinate coordinates = (GameBoard.Coordinate)clickedButton.Tag;
+            int row = coordinates.m_Row;
+            int column = coordinates.m_Col;
+
+            gameLogic.MakeMove(coordinates);
+
+
+            // Update the score labels
+
+
         }
     }
 }
