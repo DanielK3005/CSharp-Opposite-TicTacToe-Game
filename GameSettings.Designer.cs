@@ -28,176 +28,158 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.playersLabel = new System.Windows.Forms.Label();
-            this.player1Label = new System.Windows.Forms.Label();
-            this.player1TB = new System.Windows.Forms.TextBox();
-            this.player2CB = new System.Windows.Forms.CheckBox();
-            this.player2TB = new System.Windows.Forms.TextBox();
-            this.boardSizeLabel = new System.Windows.Forms.Label();
-            this.rowsLabel = new System.Windows.Forms.Label();
-            this.colsLabel = new System.Windows.Forms.Label();
-            this.rowsNumeric = new System.Windows.Forms.NumericUpDown();
-            this.colsNumeric = new System.Windows.Forms.NumericUpDown();
-            this.startButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.rowsNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.colsNumeric)).BeginInit();
-            this.SuspendLayout();
+            playersLabel = new Label();
+            player1Label = new Label();
+            player1TB = new TextBox();
+            player2CB = new CheckBox();
+            player2TB = new TextBox();
+            boardSizeLabel = new Label();
+            rowsLabel = new Label();
+            colsLabel = new Label();
+            rowsNumeric = new NumericUpDown();
+            colsNumeric = new NumericUpDown();
+            startButton = new Button();
+            ((System.ComponentModel.ISupportInitialize)rowsNumeric).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)colsNumeric).BeginInit();
+            SuspendLayout();
             // 
             // playersLabel
             // 
-            this.playersLabel.Location = new System.Drawing.Point(35, 32);
-            this.playersLabel.Name = "playersLabel";
-            this.playersLabel.Size = new System.Drawing.Size(74, 28);
-            this.playersLabel.TabIndex = 0;
-            this.playersLabel.Text = "Players:";
-            this.playersLabel.UseMnemonic = false;
+            playersLabel.Location = new Point(31, 24);
+            playersLabel.Name = "playersLabel";
+            playersLabel.Size = new Size(65, 21);
+            playersLabel.TabIndex = 0;
+            playersLabel.Text = "Players:";
+            playersLabel.UseMnemonic = false;
             // 
             // player1Label
             // 
-            this.player1Label.AutoSize = true;
-            this.player1Label.Location = new System.Drawing.Point(59, 75);
-            this.player1Label.Name = "player1Label";
-            this.player1Label.Size = new System.Drawing.Size(64, 20);
-            this.player1Label.TabIndex = 1;
-            this.player1Label.Text = "Player 1:";
+            player1Label.AutoSize = true;
+            player1Label.Location = new Point(52, 56);
+            player1Label.Name = "player1Label";
+            player1Label.Size = new Size(51, 15);
+            player1Label.TabIndex = 1;
+            player1Label.Text = "Player 1:";
             // 
             // player1TB
             // 
-            this.player1TB.Location = new System.Drawing.Point(144, 72);
-            this.player1TB.Name = "player1TB";
-            this.player1TB.Size = new System.Drawing.Size(165, 27);
-            this.player1TB.TabIndex = 2;
+            player1TB.Location = new Point(126, 54);
+            player1TB.Margin = new Padding(3, 2, 3, 2);
+            player1TB.Name = "player1TB";
+            player1TB.Size = new Size(145, 23);
+            player1TB.TabIndex = 2;
             // 
             // player2CB
             // 
-            this.player2CB.AutoSize = true;
-            this.player2CB.Location = new System.Drawing.Point(37, 124);
-            this.player2CB.Name = "player2CB";
-            this.player2CB.Size = new System.Drawing.Size(86, 24);
-            this.player2CB.TabIndex = 3;
-            this.player2CB.Text = "Player 2:";
-            this.player2CB.UseVisualStyleBackColor = true;
-            this.player2CB.CheckedChanged += new System.EventHandler(this.player2CB_CheckedChanged);
+            player2CB.AutoSize = true;
+            player2CB.Location = new Point(32, 93);
+            player2CB.Margin = new Padding(3, 2, 3, 2);
+            player2CB.Name = "player2CB";
+            player2CB.Size = new Size(70, 19);
+            player2CB.TabIndex = 3;
+            player2CB.Text = "Player 2:";
+            player2CB.UseVisualStyleBackColor = true;
+            player2CB.CheckedChanged += player2CB_CheckedChanged;
             // 
             // player2TB
             // 
-            this.player2TB.Enabled = false;
-            this.player2TB.Location = new System.Drawing.Point(144, 124);
-            this.player2TB.Name = "player2TB";
-            this.player2TB.Size = new System.Drawing.Size(165, 27);
-            this.player2TB.TabIndex = 4;
-            this.player2TB.Text = "Computer";
+            player2TB.Enabled = false;
+            player2TB.Location = new Point(126, 93);
+            player2TB.Margin = new Padding(3, 2, 3, 2);
+            player2TB.Name = "player2TB";
+            player2TB.Size = new Size(145, 23);
+            player2TB.TabIndex = 4;
+            player2TB.Text = "Computer";
             // 
             // boardSizeLabel
             // 
-            this.boardSizeLabel.AutoSize = true;
-            this.boardSizeLabel.Location = new System.Drawing.Point(37, 215);
-            this.boardSizeLabel.Name = "boardSizeLabel";
-            this.boardSizeLabel.Size = new System.Drawing.Size(83, 20);
-            this.boardSizeLabel.TabIndex = 5;
-            this.boardSizeLabel.Text = "Board Size:";
+            boardSizeLabel.AutoSize = true;
+            boardSizeLabel.Location = new Point(32, 161);
+            boardSizeLabel.Name = "boardSizeLabel";
+            boardSizeLabel.Size = new Size(64, 15);
+            boardSizeLabel.TabIndex = 5;
+            boardSizeLabel.Text = "Board Size:";
             // 
             // rowsLabel
             // 
-            this.rowsLabel.AutoSize = true;
-            this.rowsLabel.Location = new System.Drawing.Point(70, 253);
-            this.rowsLabel.Name = "rowsLabel";
-            this.rowsLabel.Size = new System.Drawing.Size(47, 20);
-            this.rowsLabel.TabIndex = 6;
-            this.rowsLabel.Text = "Rows:";
+            rowsLabel.AutoSize = true;
+            rowsLabel.Location = new Point(61, 190);
+            rowsLabel.Name = "rowsLabel";
+            rowsLabel.Size = new Size(38, 15);
+            rowsLabel.TabIndex = 6;
+            rowsLabel.Text = "Rows:";
             // 
             // colsLabel
             // 
-            this.colsLabel.AutoSize = true;
-            this.colsLabel.Location = new System.Drawing.Point(230, 253);
-            this.colsLabel.Name = "colsLabel";
-            this.colsLabel.Size = new System.Drawing.Size(40, 20);
-            this.colsLabel.TabIndex = 7;
-            this.colsLabel.Text = "Cols:";
+            colsLabel.AutoSize = true;
+            colsLabel.Location = new Point(201, 190);
+            colsLabel.Name = "colsLabel";
+            colsLabel.Size = new Size(33, 15);
+            colsLabel.TabIndex = 7;
+            colsLabel.Text = "Cols:";
             // 
             // rowsNumeric
             // 
-            this.rowsNumeric.Location = new System.Drawing.Point(123, 251);
-            this.rowsNumeric.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.rowsNumeric.Minimum = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.rowsNumeric.Name = "rowsNumeric";
-            this.rowsNumeric.Size = new System.Drawing.Size(44, 27);
-            this.rowsNumeric.TabIndex = 8;
-            this.rowsNumeric.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
+            rowsNumeric.Location = new Point(108, 188);
+            rowsNumeric.Margin = new Padding(3, 2, 3, 2);
+            rowsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            rowsNumeric.Minimum = new decimal(new int[] { 4, 0, 0, 0 });
+            rowsNumeric.Name = "rowsNumeric";
+            rowsNumeric.Size = new Size(38, 23);
+            rowsNumeric.TabIndex = 8;
+            rowsNumeric.Value = new decimal(new int[] { 4, 0, 0, 0 });
             // 
             // colsNumeric
             // 
-            this.colsNumeric.Location = new System.Drawing.Point(276, 251);
-            this.colsNumeric.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.colsNumeric.Minimum = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.colsNumeric.Name = "colsNumeric";
-            this.colsNumeric.Size = new System.Drawing.Size(43, 27);
-            this.colsNumeric.TabIndex = 9;
-            this.colsNumeric.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
+            colsNumeric.Location = new Point(242, 188);
+            colsNumeric.Margin = new Padding(3, 2, 3, 2);
+            colsNumeric.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            colsNumeric.Minimum = new decimal(new int[] { 4, 0, 0, 0 });
+            colsNumeric.Name = "colsNumeric";
+            colsNumeric.Size = new Size(38, 23);
+            colsNumeric.TabIndex = 9;
+            colsNumeric.Value = new decimal(new int[] { 4, 0, 0, 0 });
             // 
             // startButton
             // 
-            this.startButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.startButton.Location = new System.Drawing.Point(37, 309);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(293, 29);
-            this.startButton.TabIndex = 10;
-            this.startButton.Text = "Start";
-            this.startButton.UseVisualStyleBackColor = false;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            startButton.BackColor = SystemColors.ButtonFace;
+            startButton.Location = new Point(32, 232);
+            startButton.Margin = new Padding(3, 2, 3, 2);
+            startButton.Name = "startButton";
+            startButton.Size = new Size(256, 22);
+            startButton.TabIndex = 10;
+            startButton.Text = "Start";
+            startButton.UseVisualStyleBackColor = false;
+            startButton.Click += startButton_Click;
             // 
             // GameSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(366, 380);
-            this.Controls.Add(this.startButton);
-            this.Controls.Add(this.colsNumeric);
-            this.Controls.Add(this.rowsNumeric);
-            this.Controls.Add(this.colsLabel);
-            this.Controls.Add(this.rowsLabel);
-            this.Controls.Add(this.boardSizeLabel);
-            this.Controls.Add(this.player2TB);
-            this.Controls.Add(this.player2CB);
-            this.Controls.Add(this.player1TB);
-            this.Controls.Add(this.player1Label);
-            this.Controls.Add(this.playersLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.Name = "GameSettings";
-            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Game Settings";
-            ((System.ComponentModel.ISupportInitialize)(this.rowsNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.colsNumeric)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ButtonFace;
+            ClientSize = new Size(320, 285);
+            Controls.Add(startButton);
+            Controls.Add(colsNumeric);
+            Controls.Add(rowsNumeric);
+            Controls.Add(colsLabel);
+            Controls.Add(rowsLabel);
+            Controls.Add(boardSizeLabel);
+            Controls.Add(player2TB);
+            Controls.Add(player2CB);
+            Controls.Add(player1TB);
+            Controls.Add(player1Label);
+            Controls.Add(playersLabel);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 2, 3, 2);
+            MaximizeBox = false;
+            Name = "GameSettings";
+            RightToLeft = RightToLeft.No;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Game Settings";
+            ((System.ComponentModel.ISupportInitialize)rowsNumeric).EndInit();
+            ((System.ComponentModel.ISupportInitialize)colsNumeric).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
