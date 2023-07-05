@@ -55,7 +55,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                     button.Location = new System.Drawing.Point(j * (buttonSize + spacing), i * (buttonSize + spacing));
                     button.Font = new System.Drawing.Font("Arial", 36);
 
-                    button.Tag = new GameBoard.Coordinate(i, j);
+                    button.Tag = new Point(i, j);
 
                     button.Click += Button_Click;
                     
@@ -85,9 +85,9 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
             clickedButton.Enabled = false; 
 
-            GameBoard.Coordinate coordinates = (GameBoard.Coordinate)clickedButton.Tag;
-            int row = coordinates.m_Row;
-            int column = coordinates.m_Col;
+            Point coordinates = (Point)clickedButton.Tag;
+            int row = coordinates.X;
+            int column = coordinates.Y;
 
             bool isSuccess = gameLogic.MakeMove(coordinates);
 
@@ -107,13 +107,13 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void performComputerMove(Player i_NextPlayer)
         {
-            GameBoard.Coordinate computerChosenMove = gameLogic.GenerateComputerMove();
+            Point computerChosenMove = gameLogic.GenerateComputerMove();
             bool isSuccess = gameLogic.MakeMove(computerChosenMove);
 
             UpdateScoreLabels();
 
-            buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = i_NextPlayer.GetPlayerSymbol().ToString();
-            buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
+            buttons[computerChosenMove.X, computerChosenMove.Y].Text = i_NextPlayer.GetPlayerSymbol().ToString();
+            buttons[computerChosenMove.X, computerChosenMove.Y].Enabled = false;
 
             if (isSuccess)
             {

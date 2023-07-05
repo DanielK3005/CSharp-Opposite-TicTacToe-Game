@@ -6,7 +6,7 @@ namespace Ex02
     {
         private eSymbol[,] m_Board;
         private int m_BoardSize;
-        private List<Coordinate> m_EmptyCells;
+        private List<Point> m_EmptyCells;
 
         public enum eSymbol
         {
@@ -19,7 +19,7 @@ namespace Ex02
         {
             m_BoardSize = i_BoardSize;
             m_Board = new eSymbol[m_BoardSize, m_BoardSize];
-            m_EmptyCells = new List<Coordinate>();
+            m_EmptyCells = new List<Point>();
 
             InitializeBoard();
         }
@@ -32,16 +32,16 @@ namespace Ex02
                 for (int j = 0; j < m_BoardSize; j++)
                 {
                     m_Board[i, j] = eSymbol.Empty;
-                    m_EmptyCells.Add(new Coordinate(i, j));
+                    m_EmptyCells.Add(new Point(i, j));
                 }
             }
         }
 
-        public bool IsCellEmpty(Coordinate i_Move)
+        public bool IsCellEmpty(Point i_Move)
         {
             bool result = false;
 
-            if (m_Board[i_Move.m_Row, i_Move.m_Col]==eSymbol.Empty)
+            if (m_Board[i_Move.X, i_Move.Y]==eSymbol.Empty)
             {
                 result = true;
             }
@@ -49,9 +49,9 @@ namespace Ex02
             return result;
         }
 
-        public void AssignCellSymbol(Coordinate i_Move, eSymbol i_Symbol)
+        public void AssignCellSymbol(Point i_Move, eSymbol i_Symbol)
         {
-            m_Board[i_Move.m_Row, i_Move.m_Col] = i_Symbol;
+            m_Board[i_Move.X, i_Move.Y] = i_Symbol;
 
             m_EmptyCells.Remove(i_Move);
         }
@@ -74,7 +74,7 @@ namespace Ex02
             return result;
         }
 
-        public List<Coordinate> GetEmptyCellsList()
+        public List<Point> GetEmptyCellsList()
         {
             return m_EmptyCells;
         }
@@ -89,16 +89,5 @@ namespace Ex02
             return m_Board;
         }
 
-        public struct Coordinate
-        {
-            public int m_Row;
-            public int m_Col;
-
-            public Coordinate(int i_Row, int i_Col)
-            {
-                this.m_Row = i_Row;
-                this.m_Col = i_Col;
-            }
-        }
     }
 }
