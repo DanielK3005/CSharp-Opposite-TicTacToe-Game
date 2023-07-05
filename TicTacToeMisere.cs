@@ -23,11 +23,10 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
 
 
-        public TicTacToeMisere(int i_size, string i_player1Name, string i_player2Name, GameLogic.eGameMode i_gameMode)
+        public TicTacToeMisere(int i_Size, string i_Player1Name, string i_Player2Name, GameLogic.eGameMode i_gameMode)
         {
-            InitializeComponent(i_size, i_size, i_player1Name, i_player2Name);
-
-            gameLogic = new GameLogic(i_size, i_gameMode);
+            gameLogic = new GameLogic(i_Size, i_Player1Name, i_Player2Name,  i_gameMode);
+            InitializeComponent(i_Size, i_Size, i_Player1Name, i_Player2Name);
             gameMode = i_gameMode;
 
         }
@@ -82,6 +81,9 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             player2ScoreLabel.Text = $"{i_player2Name}: 0"; // Initial score for player 2
             player2ScoreLabel.AutoSize = true;
             player2ScoreLabel.Location = new System.Drawing.Point(halfFormWidth + 2 * spacing, rows * (buttonSize + spacing) + spacing);
+
+            boldPlayerLabelTurn();
+
             this.ClientSize = new Size(this.ClientSize.Width + spacing, this.ClientSize.Height + 2 * spacing);
             this.Controls.Add(player2ScoreLabel);
         }
@@ -90,6 +92,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         {
             Player nextPlayer = gameLogic.GetNextPlayerTurn();
             bool gameEnded = false;
+            boldPlayerLabelTurn();
 
             Button clickedButton = (Button)sender;
             clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
@@ -113,6 +116,25 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 performComputerMove(nextPlayer);
             }
 
+        }
+
+        private void boldPlayerLabelTurn()
+        {
+            string[] player1Parts = player1ScoreLabel.Text.Split(':');
+            string[] player2Parts = player2ScoreLabel.Text.Split(':');
+            if (gameLogic.GetCurrentPlayer() != null && !gameLogic.GetCurrentPlayer().GetPlayerName().Equals("Computer"))
+            {
+                if (gameLogic.GetCurrentPlayer().GetPlayerName().Equals(player1Parts[0]))
+                {
+                    player1ScoreLabel.Font = new Font(player1ScoreLabel.Font, FontStyle.Bold);
+                    player2ScoreLabel.Font = new Font(player2ScoreLabel.Font, FontStyle.Regular);
+                }
+                else if (gameLogic.GetCurrentPlayer().GetPlayerName().Equals(player2Parts[0]))
+                {
+                    player1ScoreLabel.Font = new Font(player1ScoreLabel.Font, FontStyle.Regular);
+                    player2ScoreLabel.Font = new Font(player2ScoreLabel.Font, FontStyle.Bold);
+                }
+            }
         }
 
         private void performComputerMove(Player i_NextPlayer)
@@ -155,7 +177,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 if (dialogResult == DialogResult.Yes)
                 {
                     resetButtonsBoard();
-
+                    boldPlayerLabelTurn();
                 }
                 else if (dialogResult == DialogResult.No)
                 {

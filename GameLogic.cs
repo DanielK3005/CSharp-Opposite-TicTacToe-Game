@@ -8,20 +8,19 @@ namespace Ex02
 {
     public class GameLogic
     {
-        private const string k_Player1Name = "Player 1";
-        private const string k_Player2Name = "Player 2";
         private const string k_ComputerName = "Computer";
         private Player m_Player1;
         private Player m_Player2;
+        private Player m_CurrentPlayer;
         private GameBoard m_Board;
         private eGameMode m_GameMode;
         private bool m_IsFull = false;
         private bool m_IsLose = false;
         private int m_PlayedTurns = 0;
 
-        public GameLogic(int i_BoardSize, eGameMode i_GameMode)
+        public GameLogic(int i_BoardSize, string i_Player1Name, string i_Player2Name, eGameMode i_GameMode)
         {
-            InitGameLogic(i_BoardSize, i_GameMode);
+            InitGameLogic(i_BoardSize, i_Player1Name, i_Player2Name,  i_GameMode);
         }
 
         public string GetComputerName()
@@ -35,11 +34,17 @@ namespace Ex02
             m_IsLose = false;
             m_PlayedTurns = 0;
             m_Board.InitializeBoard();
+            GetCurrentPlayerTurn(out m_CurrentPlayer);
         }
 
         public bool GetIsFull()
         {
             return m_IsFull;
+        }
+
+        public Player GetCurrentPlayer()
+        {
+            return m_CurrentPlayer;
         }
 
         public Player GetPlayer1()
@@ -63,11 +68,12 @@ namespace Ex02
             HumanVsComputer
         }
 
-        public void InitGameLogic(int i_BoardSize, eGameMode i_GameMode)
+        public void InitGameLogic(int i_BoardSize, string i_Player1Name, string i_Player2Name, eGameMode i_GameMode)
         {
             m_Board = new GameBoard(i_BoardSize);
             m_GameMode = i_GameMode;
-            createNewPlayers();
+            createNewPlayers(i_Player1Name, i_Player2Name);
+            GetCurrentPlayerTurn(out m_CurrentPlayer);
         }
 
         public GameBoard GetGameBoard()
@@ -80,45 +86,44 @@ namespace Ex02
             if (m_PlayedTurns % 2 == 0)
             {
                 o_CurrentTurnPlayer = m_Player1;
+                m_CurrentPlayer = m_Player1;
             }
             else
             {
                 o_CurrentTurnPlayer = m_Player2;
+                m_CurrentPlayer = m_Player2;
             }
         }
 
         public Player GetNextPlayerTurn()
         {
-            Player currentTurnPlayer =  m_Player2;
+            GetCurrentPlayerTurn(out m_CurrentPlayer);
 
-            GetCurrentPlayerTurn(out currentTurnPlayer);
-
-            if(currentTurnPlayer == m_Player1)
+            if(m_CurrentPlayer == m_Player1)
             {
-                currentTurnPlayer = m_Player2;
+                m_CurrentPlayer = m_Player2;
             }
-            else if(currentTurnPlayer == m_Player2)
+            else if(m_CurrentPlayer == m_Player2)
             {
-                currentTurnPlayer = m_Player1;
+                m_CurrentPlayer = m_Player1;
             }
 
-            return currentTurnPlayer;
+            return m_CurrentPlayer;
         }
 
 
         public bool MakeMove(Point i_Move)
         {
             bool isSuccess = true;
-            Player currentTurnPlayer;
 
-            GetCurrentPlayerTurn(out currentTurnPlayer);
+            GetCurrentPlayerTurn(out m_CurrentPlayer);
             isSuccess = m_Board.IsCellEmpty(i_Move);
 
             if(isSuccess == true)
             {
-                makePlayerMove(currentTurnPlayer, i_Move);
+                makePlayerMove(m_CurrentPlayer, i_Move);
 
-                if (CheckLose(currentTurnPlayer))
+                if (CheckLose(m_CurrentPlayer))
                 {
                     m_IsLose = true;
                     GetNextPlayerTurn().IncrementScore();
@@ -247,13 +252,13 @@ namespace Ex02
             return listOfEmptyCells[index];
         }
 
-        private void createNewPlayers()
+        private void createNewPlayers(string i_Player1Name, string i_Player2Name)
         {
-            m_Player1 = new Player(k_Player1Name, GameBoard.eSymbol.X);
+            m_Player1 = new Player(i_Player1Name, GameBoard.eSymbol.X);
 
             if (m_GameMode == eGameMode.HumanVsHuman)
             {
-                m_Player2 = new Player(k_Player2Name, GameBoard.eSymbol.O);
+                m_Player2 = new Player(i_Player2Name, GameBoard.eSymbol.O);
             }
             else
             {
