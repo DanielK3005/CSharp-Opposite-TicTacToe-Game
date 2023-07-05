@@ -27,8 +27,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         {
             InitializeComponent(i_size, i_size, i_player1Name, i_player2Name);
 
-            gameLogic = new GameLogic();
-            gameLogic.InitGameLogic(i_size, i_gameMode);
+            gameLogic = new GameLogic(i_size, i_gameMode);
             gameMode = i_gameMode;
 
         }
@@ -79,11 +78,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void Button_Click(object sender, EventArgs e)
         {
-            Player o_currentPlayer = null;
             Player nextPlayer = gameLogic.GetNextPlayerTurn();
-            DialogResult dialogResult;
-            GameBoard.Coordinate computerChosenMove;
-
             bool gameEnded = false;
 
             Button clickedButton = (Button)sender;
@@ -96,7 +91,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             bool isSuccess = gameLogic.MakeMove(coordinates);
 
-            // Update the score labels
             UpdateScoreLabels();
 
             if (isSuccess)
@@ -115,7 +109,9 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         {
             GameBoard.Coordinate computerChosenMove = gameLogic.GenerateComputerMove();
             bool isSuccess = gameLogic.MakeMove(computerChosenMove);
+
             UpdateScoreLabels();
+
             buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = i_NextPlayer.GetPlayerSymbol().ToString();
             buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
 
@@ -131,7 +127,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             Player o_currentPlayer;
             bool isGameEnded = false;
 
-            // Check if the game is over
             if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
             {
                 isGameEnded = true;
@@ -180,7 +175,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             Player player1 = gameLogic.GetPlayer1();
             Player player2 = gameLogic.GetPlayer2();
 
-            // Update the score labels
             player1ScoreLabel.Text = $"{player1.GetPlayerName()}: {player1.GetPlayerScore()}";
             player2ScoreLabel.Text = $"{player2.GetPlayerName()}: {player2.GetPlayerScore()}";
         }

@@ -19,6 +19,11 @@ namespace Ex02
         private bool m_IsLose = false;
         private int m_PlayedTurns = 0;
 
+        public GameLogic(int i_BoardSize, eGameMode i_GameMode)
+        {
+            InitGameLogic(i_BoardSize, i_GameMode);
+        }
+
         public string GetComputerName()
         {
             return k_ComputerName;
