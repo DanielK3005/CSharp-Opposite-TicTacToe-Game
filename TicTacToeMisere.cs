@@ -20,7 +20,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private Label player2ScoreLabel;
         private GameLogic gameLogic;
         private GameLogic.eGameMode gameMode;
-
+        private const string k_FormTitle = "TicTacToeMisere";
 
 
         public TicTacToeMisere(int i_Size, string i_Player1Name, string i_Player2Name, GameLogic.eGameMode i_gameMode)
@@ -46,7 +46,10 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             this.ClientSize = new System.Drawing.Size(formWidth, formHeight);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterScreen;
-            
+            this.Text = k_FormTitle;
+            this.MaximizeBox = false;
+
+
 
             for (int i = 0; i < rows; i++)
             {
