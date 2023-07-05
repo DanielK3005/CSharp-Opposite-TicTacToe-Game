@@ -10,7 +10,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private void player2CB_CheckedChanged(object sender, EventArgs e)
         {
             player2TB.Enabled = player2CB.Checked;
-            if(player2CB.Checked)
+            if (player2CB.Checked)
             {
                 player2TB.Text = "";
             }
@@ -24,12 +24,12 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         {
             TicTacToeMisere newForm;
 
-            if(checkForErrors())
+            if (checkForErrors())
             {
                 return;
             }
 
-            if(player2CB.Checked)
+            if (player2CB.Checked)
             {
                 newForm = new TicTacToeMisere((int)rowsNumeric.Value, player1TB.Text, player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsHuman);
 
@@ -67,5 +67,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             return isError;
         }
+
     }
 }

@@ -45,6 +45,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = k_FormTitle;
             this.MaximizeBox = false;
+            FormClosing += TicTacToeMisere_FormClosing;
 
 
             for (int i = 0; i < m_Rows; i++)
@@ -207,6 +208,11 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             m_Player1ScoreLabel.Text = $"{player1.GetPlayerName()}: {player1.GetPlayerScore()}";
             m_Player2ScoreLabel.Text = $"{player2.GetPlayerName()}: {player2.GetPlayerScore()}";
+        }
+
+        private void TicTacToeMisere_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
