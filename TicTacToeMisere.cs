@@ -21,11 +21,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private GameLogic gameLogic;
         private GameLogic.eGameMode gameMode;
 
-        //public enum eGameMode
-        //{
-        //    HumanVsHuman,
-        //    HumanVsComputer
-        //}
+
 
         public TicTacToeMisere(int i_size, string i_player1Name, string i_player2Name, GameLogic.eGameMode i_gameMode)
         {
@@ -110,18 +106,23 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             if (gameMode == GameLogic.eGameMode.HumanVsComputer && gameEnded == false)
             {
-                computerChosenMove = gameLogic.GenerateComputerMove();
-                isSuccess = gameLogic.MakeMove(computerChosenMove);
-                UpdateScoreLabels();
-                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = nextPlayer.GetPlayerSymbol().ToString();
-                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
-
-                if (isSuccess)
-                {
-                    checkGameStatus();
-                }
+                performComputerMove(nextPlayer);
             }
 
+        }
+
+        private void performComputerMove(Player i_NextPlayer)
+        {
+            GameBoard.Coordinate computerChosenMove = gameLogic.GenerateComputerMove();
+            bool isSuccess = gameLogic.MakeMove(computerChosenMove);
+            UpdateScoreLabels();
+            buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = i_NextPlayer.GetPlayerSymbol().ToString();
+            buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
+
+            if (isSuccess)
+            {
+                checkGameStatus();
+            }
         }
 
         private bool checkGameStatus()
