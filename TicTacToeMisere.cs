@@ -81,7 +81,10 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void Button_Click(object sender, EventArgs e)
         {
-    
+            Player o_currentPlayer = null;
+            DialogResult dialogResult;
+            GameBoard.Coordinate computerChosenMove;
+
             Button clickedButton = (Button)sender;
             clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
             clickedButton.Enabled = false; // Disable the button after it's clicked
@@ -101,13 +104,84 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 // Check if the game is over
                 if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
                 {
-                    // Perform necessary actions when the game is over
-                    // For example, display a message, reset the game, etc.
+                    gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+
+                    if (gameLogic.GetIsFull())
+                    {
+                        dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+                    }
+                    else
+                    {
+                        dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                    }
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        MessageBox.Show("You have clicked yes");
+                        resetButtonsBoard();
+
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        MessageBox.Show("You have clicked no");
+                    }
                 }
             }
 
 
             //if we are in computer vs player mode, after the button has been clicked we will check if we have winning situation, else we will generate computer move and apply it to the board by accessing the right button in the button array by the coordinates
+
+            computerChosenMove = gameLogic.GenerateComputerMove();
+            isSuccess = gameLogic.MakeMove(computerChosenMove);
+
+            if (isSuccess)
+            {
+                // Update the score labels
+                UpdateScoreLabels();
+                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = gameLogic.GetNextPlayerTurn().GetPlayerSymbol().ToString();
+                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
+
+                // Check if the game is over
+                if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
+                {
+                    gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+
+                    if (gameLogic.GetIsFull())
+                    {
+                        dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+                    }
+                    else
+                    {
+                        dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                    }
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        MessageBox.Show("You have clicked yes");
+                        resetButtonsBoard();
+
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        MessageBox.Show("You have clicked no");
+                    }
+                }
+            }
+
+        }
+
+        private void resetButtonsBoard()
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    buttons[i, j].Text = "";
+                    buttons[i, j].Enabled = true;
+                }
+            }
+
+            gameLogic.ResetGame();
         }
 
         private void UpdateScoreLabels()
