@@ -92,93 +92,72 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             Button clickedButton = (Button)sender;
             clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
-            clickedButton.Enabled = false; // Disable the button after it's clicked
+            clickedButton.Enabled = false; 
 
-            // Retrieve the button coordinates from the Tag property
             GameBoard.Coordinate coordinates = (GameBoard.Coordinate)clickedButton.Tag;
             int row = coordinates.m_Row;
             int column = coordinates.m_Col;
 
             bool isSuccess = gameLogic.MakeMove(coordinates);
 
+            // Update the score labels
+            UpdateScoreLabels();
+
             if (isSuccess)
             {
-                // Update the score labels
-                UpdateScoreLabels();
-
-                // Check if the game is over
-                if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
-                {
-                    gameEnded = true;
-
-                    gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
-
-                    if (gameLogic.GetIsLose())
-                    {
-                        dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
-                    }
-                    else
-                    {
-                        dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
-                        
-                    }
-
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        resetButtonsBoard();
-
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        Application.Exit();
-                    }
-                }
+                gameEnded = checkGameStatus();
             }
-
-
-            //if we are in computer vs player mode, after the button has been clicked we will check if we have winning situation, else we will generate computer move and apply it to the board by accessing the right button in the button array by the coordinates
 
             if (gameMode == GameLogic.eGameMode.HumanVsComputer && gameEnded == false)
             {
                 computerChosenMove = gameLogic.GenerateComputerMove();
                 isSuccess = gameLogic.MakeMove(computerChosenMove);
-
+                UpdateScoreLabels();
+                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = nextPlayer.GetPlayerSymbol().ToString();
+                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
 
                 if (isSuccess)
                 {
-                    // Update the score labels
-                    UpdateScoreLabels();
-                    buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = nextPlayer.GetPlayerSymbol().ToString();
-                    buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
-
-                    // Check if the game is over
-                    if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
-                    {
-                        gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
-
-                        if (gameLogic.GetIsLose())
-                        {
-                            dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
-                        }
-                        else
-                        {
-                            dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
-
-                        }
-
-                        if (dialogResult == DialogResult.Yes)
-                        {
-                            resetButtonsBoard();
-
-                        }
-                        else if (dialogResult == DialogResult.No)
-                        {
-                            Application.Exit();
-                        }
-                    }
+                    checkGameStatus();
                 }
             }
 
+        }
+
+        private bool checkGameStatus()
+        {
+            DialogResult dialogResult;
+            Player o_currentPlayer;
+            bool isGameEnded = false;
+
+            // Check if the game is over
+            if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
+            {
+                isGameEnded = true;
+                gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+
+                if (gameLogic.GetIsLose())
+                {
+                    dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                }
+                else
+                {
+                    dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+
+                }
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    resetButtonsBoard();
+
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    Application.Exit();
+                }
+            }
+
+            return isGameEnded;
         }
 
         private void resetButtonsBoard()
