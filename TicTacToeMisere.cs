@@ -40,6 +40,8 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             int labelHeight = 30; 
             int formWidth = m_Columns * buttonSize + (m_Columns - 1) * spacing + spacing;
             int formHeight = m_Rows * buttonSize + (m_Rows - 1) * spacing + labelHeight;
+            Player currentPlayer;
+
             this.ClientSize = new System.Drawing.Size(formWidth, formHeight);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -56,7 +58,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                     button.Size = new System.Drawing.Size(buttonSize, buttonSize);
                     button.Location = new System.Drawing.Point(j * buttonSize + (j + 1) * spacing, i * buttonSize + (i + 1) * spacing);
                     button.Font = new System.Drawing.Font("Arial", 36);
-                    //button.Margin = new Padding(10, 10, 0, 10);
 
                     button.Tag = new Point(i, j);
 
@@ -82,8 +83,8 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             m_Player2ScoreLabel.AutoSize = true;
             m_Player2ScoreLabel.Location = new System.Drawing.Point(halfFormWidth + 2 * spacing, m_Rows * (buttonSize + spacing) + spacing);
 
-            gameLogic.GetCurrentPlayerTurn(out player);
-            boldPlayerLabelTurn(player);
+            m_GameLogic.GetCurrentPlayerTurn(out currentPlayer);
+            boldPlayerLabelTurn(currentPlayer);
 
             this.ClientSize = new Size(this.ClientSize.Width + spacing, this.ClientSize.Height + 2 * spacing);
             this.Controls.Add(m_Player2ScoreLabel);
@@ -120,8 +121,8 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void boldPlayerLabelTurn(Player i_CurrentPlayer)
         {
-            string[] player1Parts = player1ScoreLabel.Text.Split(':');
-            string[] player2Parts = player2ScoreLabel.Text.Split(':');
+            string[] player1Parts = m_Player1ScoreLabel.Text.Split(':');
+            string[] player2Parts = m_Player2ScoreLabel.Text.Split(':');
 
 
             if (i_CurrentPlayer != null && !i_CurrentPlayer.GetPlayerName().Equals("Computer"))
@@ -178,7 +179,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 if (dialogResult == DialogResult.Yes)
                 {
                     resetButtonsBoard();
-                    gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+                    m_GameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
                     boldPlayerLabelTurn(o_currentPlayer);
                 }
                 else if (dialogResult == DialogResult.No)
