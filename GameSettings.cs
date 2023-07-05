@@ -59,6 +59,12 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 isError = true;
             }
 
+            if (player1TB.Text == player2TB.Text)
+            {
+                MessageBox.Show("You have to use different names for each of the players", "Error");
+                isError = true;
+            }
+
             if (rowsNumeric.Value != colsNumeric.Value)
             {
                 MessageBox.Show("The form of the board must be a square.\nWhich means that rows will be equal to columns", "Error");
