@@ -20,11 +20,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private Label player2ScoreLabel;
         private GameLogic gameLogic;
 
-        //public enum eGameMode
-        //{
-        //    HumanVsHuman,
-        //    HumanVsComputer
-        //}
 
         public TicTacToeMisere(int i_size, string i_player1Name, string i_player2Name, GameLogic.eGameMode i_gameMode)
         {
@@ -41,13 +36,16 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             this.columns = i_columns;
             buttons = new Button[rows, columns];
 
-            int buttonSize = 100; // Adjust the button size as desired
+            int buttonSize = 70; // Adjust the button size as desired
             int spacing = 10; // Adjust the spacing between buttons as desired
             int labelHeight = 30; // Adjust the height of the labels as desired
 
-            int formWidth = columns * buttonSize + (columns - 1) * spacing;
+            int formWidth = columns * buttonSize + (columns - 1) * spacing + spacing;
             int formHeight = rows * buttonSize + (rows - 1) * spacing + labelHeight;
             this.ClientSize = new System.Drawing.Size(formWidth, formHeight);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            
 
             for (int i = 0; i < rows; i++)
             {
@@ -55,8 +53,9 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 {
                     Button button = new Button();
                     button.Size = new System.Drawing.Size(buttonSize, buttonSize);
-                    button.Location = new System.Drawing.Point(j * (buttonSize + spacing), i * (buttonSize + spacing));
+                    button.Location = new System.Drawing.Point(j * buttonSize + (j + 1) * spacing, i * buttonSize + (i + 1) * spacing);
                     button.Font = new System.Drawing.Font("Arial", 36);
+                    //button.Margin = new Padding(10, 10, 0, 10);
 
                     button.Tag = new GameBoard.Coordinate(i, j);
 
@@ -67,15 +66,21 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 }
             }
 
+            int halfFormWidth = (formWidth - spacing) / 2;
+
             // Create labels for player scores
             player1ScoreLabel = new Label();
             player1ScoreLabel.Text = $"{i_player1Name}: 0"; // Initial score for player 1
-            player1ScoreLabel.Location = new System.Drawing.Point(0, rows * (buttonSize + spacing));
+            player1ScoreLabel.AutoSize = true;
+            player1ScoreLabel.PerformLayout();
+            player1ScoreLabel.Location = new System.Drawing.Point(halfFormWidth - player1ScoreLabel.Size.Width / 2 - spacing , rows * (buttonSize + spacing) + spacing);
             this.Controls.Add(player1ScoreLabel);
 
             player2ScoreLabel = new Label();
             player2ScoreLabel.Text = $"{i_player2Name}: 0"; // Initial score for player 2
-            player2ScoreLabel.Location = new System.Drawing.Point(columns * (buttonSize + spacing) - 100, rows * (buttonSize + spacing));
+            player2ScoreLabel.AutoSize = true;
+            player2ScoreLabel.Location = new System.Drawing.Point(halfFormWidth + 2 * spacing, rows * (buttonSize + spacing) + spacing);
+            this.ClientSize = new Size(this.ClientSize.Width + spacing, this.ClientSize.Height + 2 * spacing);
             this.Controls.Add(player2ScoreLabel);
         }
 

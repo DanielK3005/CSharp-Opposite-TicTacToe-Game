@@ -23,7 +23,11 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private void startButton_Click(object sender, EventArgs e)
         {
             TicTacToeMisere newForm;
-            checkForErrors();
+
+            if(checkForErrors())
+            {
+                return;
+            }
 
             if(player2CB.Checked)
             {
@@ -39,22 +43,29 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             newForm.Show();
         }
 
-        private void checkForErrors()
+        private bool checkForErrors()
         {
+            bool isError = false;
+
             if (player1TB.Text == "")
             {
                 MessageBox.Show("You didnt insert player one name!", "Error");
+                isError = true;
             }
 
             if (player2TB.Text == "")
             {
                 MessageBox.Show("You didnt insert player two name!", "Error");
+                isError = true;
             }
 
             if (rowsNumeric.Value != colsNumeric.Value)
             {
                 MessageBox.Show("The form of the board must be a square.\nwhich means that rows will be equal to cols", "Error");
+                isError = true;
             }
+
+            return isError;
         }
     }
 }
