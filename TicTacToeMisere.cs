@@ -19,6 +19,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private Label player1ScoreLabel;
         private Label player2ScoreLabel;
         private GameLogic gameLogic;
+        private GameLogic.eGameMode gameMode;
 
         //public enum eGameMode
         //{
@@ -32,6 +33,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             gameLogic = new GameLogic();
             gameLogic.InitGameLogic(i_size, i_gameMode);
+            gameMode = i_gameMode;
 
         }
 
@@ -82,8 +84,11 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private void Button_Click(object sender, EventArgs e)
         {
             Player o_currentPlayer = null;
+            Player nextPlayer = gameLogic.GetNextPlayerTurn();
             DialogResult dialogResult;
             GameBoard.Coordinate computerChosenMove;
+
+            bool gameEnded = false;
 
             Button clickedButton = (Button)sender;
             clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
@@ -104,26 +109,28 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 // Check if the game is over
                 if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
                 {
+                    gameEnded = true;
+
                     gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
 
-                    if (gameLogic.GetIsFull())
+                    if (gameLogic.GetIsLose())
                     {
-                        dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+                        dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
                     }
                     else
                     {
-                        dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                        dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+                        
                     }
 
                     if (dialogResult == DialogResult.Yes)
                     {
-                        MessageBox.Show("You have clicked yes");
                         resetButtonsBoard();
 
                     }
                     else if (dialogResult == DialogResult.No)
                     {
-                        MessageBox.Show("You have clicked no");
+                        Application.Exit();
                     }
                 }
             }
@@ -131,39 +138,43 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             //if we are in computer vs player mode, after the button has been clicked we will check if we have winning situation, else we will generate computer move and apply it to the board by accessing the right button in the button array by the coordinates
 
-            computerChosenMove = gameLogic.GenerateComputerMove();
-            isSuccess = gameLogic.MakeMove(computerChosenMove);
-
-            if (isSuccess)
+            if (gameMode == GameLogic.eGameMode.HumanVsComputer && gameEnded == false)
             {
-                // Update the score labels
-                UpdateScoreLabels();
-                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = gameLogic.GetNextPlayerTurn().GetPlayerSymbol().ToString();
-                buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
+                computerChosenMove = gameLogic.GenerateComputerMove();
+                isSuccess = gameLogic.MakeMove(computerChosenMove);
 
-                // Check if the game is over
-                if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
+
+                if (isSuccess)
                 {
-                    gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+                    // Update the score labels
+                    UpdateScoreLabels();
+                    buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Text = nextPlayer.GetPlayerSymbol().ToString();
+                    buttons[computerChosenMove.m_Row, computerChosenMove.m_Col].Enabled = false;
 
-                    if (gameLogic.GetIsFull())
+                    // Check if the game is over
+                    if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
                     {
-                        dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
-                    }
-                    else
-                    {
-                        dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
-                    }
+                        gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
 
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        MessageBox.Show("You have clicked yes");
-                        resetButtonsBoard();
+                        if (gameLogic.GetIsLose())
+                        {
+                            dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                        }
+                        else
+                        {
+                            dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
 
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        MessageBox.Show("You have clicked no");
+                        }
+
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            resetButtonsBoard();
+
+                        }
+                        else if (dialogResult == DialogResult.No)
+                        {
+                            Application.Exit();
+                        }
                     }
                 }
             }
