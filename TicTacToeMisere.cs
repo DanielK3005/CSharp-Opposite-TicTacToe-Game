@@ -28,7 +28,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             m_GameLogic = new GameLogic(i_Size, i_Player1Name, i_Player2Name,  i_gameMode);
             InitializeComponent(i_Size, i_Size, i_Player1Name, i_Player2Name);
             m_GameMode = i_gameMode;
-
         }
 
         private void InitializeComponent(int i_rows, int i_columns, string i_player1Name, string i_player2Name)
@@ -115,13 +114,13 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             {
                 performComputerMove(nextPlayer);
             }
-
         }
 
         private void boldPlayerLabelTurn()
         {
             string[] player1Parts = m_Player1ScoreLabel.Text.Split(':');
             string[] player2Parts = m_Player2ScoreLabel.Text.Split(':');
+
             if (m_GameLogic.GetCurrentPlayer() != null && !m_GameLogic.GetCurrentPlayer().GetPlayerName().Equals("Computer"))
             {
                 if (m_GameLogic.GetCurrentPlayer().GetPlayerName().Equals(player1Parts[0]))
@@ -171,7 +170,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 else
                 {
                     dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
-
                 }
 
                 if (dialogResult == DialogResult.Yes)
