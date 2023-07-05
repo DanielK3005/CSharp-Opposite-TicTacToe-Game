@@ -49,19 +49,19 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             if (player1TB.Text == "")
             {
-                MessageBox.Show("You didnt insert player one name!", "Error");
+                MessageBox.Show("Insert player one name!", "Error");
                 isError = true;
             }
 
             if (player2TB.Text == "")
             {
-                MessageBox.Show("You didnt insert player two name!", "Error");
+                MessageBox.Show("Insert player two name!", "Error");
                 isError = true;
             }
 
             if (rowsNumeric.Value != colsNumeric.Value)
             {
-                MessageBox.Show("The form of the board must be a square.\nwhich means that rows will be equal to cols", "Error");
+                MessageBox.Show("The form of the board must be a square.\nWhich means that rows will be equal to columns", "Error");
                 isError = true;
             }
 
