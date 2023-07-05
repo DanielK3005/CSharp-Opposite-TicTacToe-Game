@@ -11,7 +11,6 @@ namespace Ex02
         private const string k_ComputerName = "Computer";
         private Player m_Player1;
         private Player m_Player2;
-        private Player m_CurrentPlayer;
         private GameBoard m_Board;
         private eGameMode m_GameMode;
         private bool m_IsFull = false;
@@ -34,17 +33,11 @@ namespace Ex02
             m_IsLose = false;
             m_PlayedTurns = 0;
             m_Board.InitializeBoard();
-            GetCurrentPlayerTurn(out m_CurrentPlayer);
         }
 
         public bool GetIsFull()
         {
             return m_IsFull;
-        }
-
-        public Player GetCurrentPlayer()
-        {
-            return m_CurrentPlayer;
         }
 
         public Player GetPlayer1()
@@ -73,7 +66,6 @@ namespace Ex02
             m_Board = new GameBoard(i_BoardSize);
             m_GameMode = i_GameMode;
             createNewPlayers(i_Player1Name, i_Player2Name);
-            GetCurrentPlayerTurn(out m_CurrentPlayer);
         }
 
         public GameBoard GetGameBoard()
@@ -86,44 +78,45 @@ namespace Ex02
             if (m_PlayedTurns % 2 == 0)
             {
                 o_CurrentTurnPlayer = m_Player1;
-                m_CurrentPlayer = m_Player1;
             }
             else
             {
                 o_CurrentTurnPlayer = m_Player2;
-                m_CurrentPlayer = m_Player2;
             }
         }
 
         public Player GetNextPlayerTurn()
         {
-            GetCurrentPlayerTurn(out m_CurrentPlayer);
+            Player currentTurnPlayer = m_Player2;
 
-            if(m_CurrentPlayer == m_Player1)
+            GetCurrentPlayerTurn(out currentTurnPlayer);
+
+            if (currentTurnPlayer == m_Player1)
             {
-                m_CurrentPlayer = m_Player2;
+                currentTurnPlayer = m_Player2;
             }
-            else if(m_CurrentPlayer == m_Player2)
+            else if (currentTurnPlayer == m_Player2)
             {
-                m_CurrentPlayer = m_Player1;
+                currentTurnPlayer = m_Player1;
             }
 
-            return m_CurrentPlayer;
+            return currentTurnPlayer;
         }
 
 
         public bool MakeMove(Point i_Move)
         {
             bool isSuccess = true;
+            Player currentTurnPlayer;
 
-            GetCurrentPlayerTurn(out m_CurrentPlayer);
+            GetCurrentPlayerTurn(out currentTurnPlayer);
             isSuccess = m_Board.IsCellEmpty(i_Move);
 
-            if(isSuccess == true)
+            if (isSuccess == true)
             {
-                makePlayerMove(m_CurrentPlayer, i_Move);
+                makePlayerMove(currentTurnPlayer, i_Move);
 
-                if (CheckLose(m_CurrentPlayer))
+                if (CheckLose(currentTurnPlayer))
                 {
                     m_IsLose = true;
                     GetNextPlayerTurn().IncrementScore();
