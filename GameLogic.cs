@@ -19,6 +19,11 @@ namespace Ex02
         private bool m_IsLose = false;
         private int m_PlayedTurns = 0;
 
+        public GameLogic(int i_BoardSize, eGameMode i_GameMode)
+        {
+            InitGameLogic(i_BoardSize, i_GameMode);
+        }
+
         public string GetComputerName()
         {
             return k_ComputerName;
@@ -101,7 +106,7 @@ namespace Ex02
         }
 
 
-        public bool MakeMove(GameBoard.Coordinate i_Move)
+        public bool MakeMove(Point i_Move)
         {
             bool isSuccess = true;
             Player currentTurnPlayer;
@@ -227,15 +232,15 @@ namespace Ex02
         }
 
 
-        private void makePlayerMove(Player i_Player, GameBoard.Coordinate i_Move)
+        private void makePlayerMove(Player i_Player, Point i_Move)
         {
             m_Board.AssignCellSymbol(i_Move, i_Player.GetPlayerSymbol());
         }
 
-        public GameBoard.Coordinate GenerateComputerMove()
+        public Point GenerateComputerMove()
         {
             Random random = new Random();
-            List<GameBoard.Coordinate> listOfEmptyCells = m_Board.GetEmptyCellsList();
+            List<Point> listOfEmptyCells = m_Board.GetEmptyCellsList();
 
             int index = random.Next(0, listOfEmptyCells.Count);
 

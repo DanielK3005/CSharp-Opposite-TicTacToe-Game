@@ -19,14 +19,16 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private Label player1ScoreLabel;
         private Label player2ScoreLabel;
         private GameLogic gameLogic;
+        private GameLogic.eGameMode gameMode;
+
 
 
         public TicTacToeMisere(int i_size, string i_player1Name, string i_player2Name, GameLogic.eGameMode i_gameMode)
         {
             InitializeComponent(i_size, i_size, i_player1Name, i_player2Name);
 
-            gameLogic = new GameLogic();
-            gameLogic.InitGameLogic(i_size, i_gameMode);
+            gameLogic = new GameLogic(i_size, i_gameMode);
+            gameMode = i_gameMode;
 
         }
 
@@ -57,7 +59,7 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                     button.Font = new System.Drawing.Font("Arial", 36);
                     //button.Margin = new Padding(10, 10, 0, 10);
 
-                    button.Tag = new GameBoard.Coordinate(i, j);
+                    button.Tag = new Point(i, j);
 
                     button.Click += Button_Click;
                     
@@ -86,33 +88,96 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void Button_Click(object sender, EventArgs e)
         {
-    
+            Player nextPlayer = gameLogic.GetNextPlayerTurn();
+            bool gameEnded = false;
+
             Button clickedButton = (Button)sender;
             clickedButton.Text = gameLogic.getCurrentPlayerSymbol().ToString(); 
-            clickedButton.Enabled = false; // Disable the button after it's clicked
+            clickedButton.Enabled = false; 
 
-            // Retrieve the button coordinates from the Tag property
-            GameBoard.Coordinate coordinates = (GameBoard.Coordinate)clickedButton.Tag;
-            int row = coordinates.m_Row;
-            int column = coordinates.m_Col;
+            Point coordinates = (Point)clickedButton.Tag;
+            int row = coordinates.X;
+            int column = coordinates.Y;
 
             bool isSuccess = gameLogic.MakeMove(coordinates);
 
+            UpdateScoreLabels();
+
             if (isSuccess)
             {
-                // Update the score labels
-                UpdateScoreLabels();
+                gameEnded = checkGameStatus();
+            }
 
-                // Check if the game is over
-                if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
+            if (gameMode == GameLogic.eGameMode.HumanVsComputer && gameEnded == false)
+            {
+                performComputerMove(nextPlayer);
+            }
+
+        }
+
+        private void performComputerMove(Player i_NextPlayer)
+        {
+            Point computerChosenMove = gameLogic.GenerateComputerMove();
+            bool isSuccess = gameLogic.MakeMove(computerChosenMove);
+
+            UpdateScoreLabels();
+
+            buttons[computerChosenMove.X, computerChosenMove.Y].Text = i_NextPlayer.GetPlayerSymbol().ToString();
+            buttons[computerChosenMove.X, computerChosenMove.Y].Enabled = false;
+
+            if (isSuccess)
+            {
+                checkGameStatus();
+            }
+        }
+
+        private bool checkGameStatus()
+        {
+            DialogResult dialogResult;
+            Player o_currentPlayer;
+            bool isGameEnded = false;
+
+            if (gameLogic.GetIsFull() || gameLogic.GetIsLose())
+            {
+                isGameEnded = true;
+                gameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+
+                if (gameLogic.GetIsLose())
                 {
-                    // Perform necessary actions when the game is over
-                    // For example, display a message, reset the game, etc.
+                    dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                }
+                else
+                {
+                    dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+
+                }
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    resetButtonsBoard();
+
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    Application.Exit();
                 }
             }
 
+            return isGameEnded;
+        }
 
-            //if we are in computer vs player mode, after the button has been clicked we will check if we have winning situation, else we will generate computer move and apply it to the board by accessing the right button in the button array by the coordinates
+        private void resetButtonsBoard()
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    buttons[i, j].Text = "";
+                    buttons[i, j].Enabled = true;
+                }
+            }
+
+            gameLogic.ResetGame();
         }
 
         private void UpdateScoreLabels()
@@ -120,7 +185,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             Player player1 = gameLogic.GetPlayer1();
             Player player2 = gameLogic.GetPlayer2();
 
-            // Update the score labels
             player1ScoreLabel.Text = $"{player1.GetPlayerName()}: {player1.GetPlayerScore()}";
             player2ScoreLabel.Text = $"{player2.GetPlayerName()}: {player2.GetPlayerScore()}";
         }
