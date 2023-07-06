@@ -9,14 +9,14 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
         private void player2CB_CheckedChanged(object sender, EventArgs e)
         {
-            player2TB.Enabled = player2CB.Checked;
-            if (player2CB.Checked)
+            m_Player2TB.Enabled = m_Player2CB.Checked;
+            if (m_Player2CB.Checked)
             {
-                player2TB.Text = "";
+                m_Player2TB.Text = "";
             }
             else
             {
-                player2TB.Text = "Computer";
+                m_Player2TB.Text = "Computer";
             }
         }
 
@@ -29,14 +29,14 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
                 return;
             }
 
-            if (player2CB.Checked)
+            if (m_Player2CB.Checked)
             {
-                newForm = new TicTacToeMisere((int)rowsNumeric.Value, player1TB.Text, player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsHuman);
+                newForm = new TicTacToeMisere((int)m_RowsNumeric.Value, m_Player1TB.Text, m_Player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsHuman);
 
             }
             else
             {
-                newForm = new TicTacToeMisere((int)rowsNumeric.Value, player1TB.Text, player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsComputer);
+                newForm = new TicTacToeMisere((int)m_RowsNumeric.Value, m_Player1TB.Text, m_Player2TB.Text, Ex02.GameLogic.eGameMode.HumanVsComputer);
             }
 
             this.Hide();
@@ -47,25 +47,25 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         {
             bool isError = false;
 
-            if (player1TB.Text == "")
+            if (m_Player1TB.Text == "")
             {
                 MessageBox.Show("Insert player one name!", "Error");
                 isError = true;
             }
 
-            if (player2TB.Text == "")
+            if (m_Player2TB.Text == "")
             {
                 MessageBox.Show("Insert player two name!", "Error");
                 isError = true;
             }
 
-            if (player1TB.Text == player2TB.Text)
+            if (m_Player1TB.Text == m_Player2TB.Text)
             {
                 MessageBox.Show("You have to use different names for each of the players", "Error");
                 isError = true;
             }
 
-            if (rowsNumeric.Value != colsNumeric.Value)
+            if (m_RowsNumeric.Value != m_ColsNumeric.Value)
             {
                 MessageBox.Show("The form of the board must be a square.\nWhich means that rows will be equal to columns", "Error");
                 isError = true;
