@@ -22,25 +22,24 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private GameLogic.eGameMode m_GameMode;
         private const string k_FormTitle = "TicTacToeMisere";
 
-
-        public TicTacToeMisere(int i_Size, string i_Player1Name, string i_Player2Name, GameLogic.eGameMode i_gameMode)
+        public TicTacToeMisere(int i_Size, string i_Player1Name, string i_Player2Name, GameLogic.eGameMode i_GameMode)
         {
-            m_GameLogic = new GameLogic(i_Size, i_Player1Name, i_Player2Name,  i_gameMode);
+            m_GameLogic = new GameLogic(i_Size, i_Player1Name, i_Player2Name,  i_GameMode);
             InitializeComponent(i_Size, i_Size, i_Player1Name, i_Player2Name);
-            m_GameMode = i_gameMode;
+            m_GameMode = i_GameMode;
         }
 
-        private void InitializeComponent(int i_rows, int i_columns, string i_player1Name, string i_player2Name)
+        private void InitializeComponent(int i_Rows, int i_Columns, string i_Player1Name, string i_Player2Name)
         {
-            this.m_Rows = i_rows;
-            this.m_Columns = i_columns;
+            this.m_Rows = i_Rows;
+            this.m_Columns = i_Columns;
             m_Buttons = new Button[m_Rows, m_Columns];
             int buttonSize = 70;
             int spacing = 10; 
             int labelHeight = 30; 
             int formWidth = m_Columns * buttonSize + (m_Columns - 1) * spacing + spacing;
             int formHeight = m_Rows * buttonSize + (m_Rows - 1) * spacing + labelHeight;
-            Player currentPlayer;
+            Player o_CurrentPlayer;
 
             this.ClientSize = new System.Drawing.Size(formWidth, formHeight);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -70,21 +69,20 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             int halfFormWidth = (formWidth - spacing) / 2;
 
-            // Create labels for player scores
             m_Player1ScoreLabel = new Label();
-            m_Player1ScoreLabel.Text = $"{i_player1Name}: 0"; 
+            m_Player1ScoreLabel.Text = $"{i_Player1Name}: 0"; 
             m_Player1ScoreLabel.AutoSize = true;
             m_Player1ScoreLabel.PerformLayout();
             m_Player1ScoreLabel.Location = new System.Drawing.Point(halfFormWidth - m_Player1ScoreLabel.Size.Width / 2 - spacing , m_Rows * (buttonSize + spacing) + spacing);
             this.Controls.Add(m_Player1ScoreLabel);
 
             m_Player2ScoreLabel = new Label();
-            m_Player2ScoreLabel.Text = $"{i_player2Name}: 0"; 
+            m_Player2ScoreLabel.Text = $"{i_Player2Name}: 0"; 
             m_Player2ScoreLabel.AutoSize = true;
             m_Player2ScoreLabel.Location = new System.Drawing.Point(halfFormWidth + 2 * spacing, m_Rows * (buttonSize + spacing) + spacing);
 
-            m_GameLogic.GetCurrentPlayerTurn(out currentPlayer);
-            boldPlayerLabelTurn(currentPlayer);
+            m_GameLogic.GetCurrentPlayerTurn(out o_CurrentPlayer);
+            boldPlayerLabelTurn(o_CurrentPlayer);
 
             this.ClientSize = new Size(this.ClientSize.Width + spacing, this.ClientSize.Height + 2 * spacing);
             this.Controls.Add(m_Player2ScoreLabel);
@@ -124,7 +122,6 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
             string[] player1Parts = m_Player1ScoreLabel.Text.Split(':');
             string[] player2Parts = m_Player2ScoreLabel.Text.Split(':');
 
-
             if (i_CurrentPlayer != null && !i_CurrentPlayer.GetPlayerName().Equals("Computer"))
             {
                 if (i_CurrentPlayer.GetPlayerName().Equals(player1Parts[0]))
@@ -159,28 +156,28 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
         private bool checkGameStatus()
         {
             DialogResult dialogResult;
-            Player o_currentPlayer;
+            Player o_CurrentPlayer;
             bool isGameEnded = false;
 
             if (m_GameLogic.GetIsFull() || m_GameLogic.GetIsLose())
             {
                 isGameEnded = true;
-                m_GameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
+                m_GameLogic.GetCurrentPlayerTurn(out o_CurrentPlayer);
 
                 if (m_GameLogic.GetIsLose())
                 {
-                    dialogResult = MessageBox.Show("The winner is " + o_currentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A win!", MessageBoxButtons.YesNo);
+                    dialogResult = MessageBox.Show("The winner is " + o_CurrentPlayer.GetPlayerName() + "!\nWould you like to player another round?", "A Win!", MessageBoxButtons.YesNo);
                 }
                 else
                 {
-                    dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A tie!", MessageBoxButtons.YesNo);
+                    dialogResult = MessageBox.Show("Tie!\nWould you like to player another round?", "A Tie!", MessageBoxButtons.YesNo);
                 }
 
                 if (dialogResult == DialogResult.Yes)
                 {
                     resetButtonsBoard();
-                    m_GameLogic.GetCurrentPlayerTurn(out o_currentPlayer);
-                    boldPlayerLabelTurn(o_currentPlayer);
+                    m_GameLogic.GetCurrentPlayerTurn(out o_CurrentPlayer);
+                    boldPlayerLabelTurn(o_CurrentPlayer);
                 }
                 else if (dialogResult == DialogResult.No)
                 {
