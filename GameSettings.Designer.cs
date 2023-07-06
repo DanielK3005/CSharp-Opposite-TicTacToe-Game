@@ -77,6 +77,7 @@
             this.m_Player2CB.TabIndex = 3;
             this.m_Player2CB.Text = "Player 2:";
             this.m_Player2CB.UseVisualStyleBackColor = true;
+            this.m_Player2CB.CheckedChanged += new System.EventHandler(this.player2CB_CheckedChanged);
             // 
             // m_Player2TB
             // 
@@ -167,6 +168,7 @@
             this.m_StartButton.TabIndex = 10;
             this.m_StartButton.Text = "Start";
             this.m_StartButton.UseVisualStyleBackColor = false;
+            this.m_StartButton.Click += new System.EventHandler(this.startButton_Click);
             // 
             // GameSettings
             // 

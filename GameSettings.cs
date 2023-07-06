@@ -73,6 +73,5 @@ namespace B23_Ex05_Daniel_208063362_Lior_207899469
 
             return isError;
         }
-
     }
 }
